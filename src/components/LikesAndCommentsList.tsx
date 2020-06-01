@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IComment, ICommentMethods } from "../models/index";
 import { LikesAndCommentsItem } from "./LikesAndCommentItem";
+import styles from "./LikesAndComments.module.scss";
 
 export interface ILikesAndCommentsListProps {
     comments: IComment[];
@@ -15,7 +16,26 @@ export const LikesAndCommentsList: React.SFC<ILikesAndCommentsListProps> = (prop
                     <LikesAndCommentsItem
                         comment={item}
                         commentMethods={props.commentMethods}
-                    /></div>
+                        isReply={false}
+                    />
+                    {item.replies.map((reply, index2) => {
+                        return (
+                            <div className={styles.reply}>
+                                <LikesAndCommentsItem
+                                    comment={reply}
+                                    commentMethods={props.commentMethods}
+                                    key={index2}
+                                    isReply={true}
+                                />
+                            </div>
+
+                        );
+
+                    })
+                    }
+
+
+                </div>
             );
         })
         }

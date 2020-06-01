@@ -2,7 +2,7 @@ import { IAuthor } from "./IAuthor";
 
 export interface IComment {
     author: IAuthor;
-    createdDate: Date;
+    createdDate: string;
     id: string;
     isLikedByUser: boolean;
     isReply: boolean;

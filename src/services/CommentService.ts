@@ -12,6 +12,12 @@ export class CommentService implements ICommentService {
         this.currentWebUrl = currentWebUrl;
         this.spHttpClient = spHttpClient;
     }
+    public async areCommentsDisabled(): Promise<boolean> {
+        const url = `${this.currentWebUrl}/_api/web/lists/GetByTitle('Site Pages')/GetItemById(${this.currentPageId})/commentsDisabled`;
+        const response = await this.spHttpClient.get(url, SPHttpClient.configurations.v1);
+        const responseJSON = await response.json();
+        return responseJSON.value;
+    }
 
     public async likeComment(commentId: string): Promise<void> {
         const spOpts: ISPHttpClientOptions = {};
@@ -40,8 +46,6 @@ export class CommentService implements ICommentService {
     }
 
     public async getCommentsForPage(): Promise<IComment[]> {
-
-
         const url = `${this.currentWebUrl}/_api/web/lists/GetByTitle('Site Pages')/GetItemById(${this.currentPageId})/Comments?$expand=replies`;
         const response = await this.spHttpClient.get(url, SPHttpClient.configurations.v1);
         const responseJSON = await response.json();

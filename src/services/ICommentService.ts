@@ -8,4 +8,6 @@ export interface ICommentService {
     likeComment(commentId: string): Promise<void>;
 
     unlikeComment(commentId: string): Promise<void>;
+
+    areCommentsDisabled(): Promise<boolean>;
 }

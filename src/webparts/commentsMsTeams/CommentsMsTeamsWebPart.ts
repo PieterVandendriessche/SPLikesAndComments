@@ -8,7 +8,7 @@ import {
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'CommentsMsTeamsWebPartStrings';
-import { LikesAndCommentsContainer } from "../../components/LikesAndCommentsContainer"
+import { LikesAndCommentsContainer } from "../../components/LikesAndCommentsContainer";
 
 export interface ICommentsMsTeamsWebPartProps {
   description: string;

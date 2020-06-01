@@ -30,11 +30,9 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
 
   @override
   public onInit(): Promise<void> {
-    console.log(this.context.pageContext.web.absoluteUrl);
     sp.setup({
       spfxContext: this.context
     });
-    console.log(this.context.pageContext.web.absoluteUrl);
 
 
     //When a placeholderProvider has changed fire the render method again.
@@ -42,7 +40,7 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
 
     //On navigate event start render
     this.context.application.navigatedEvent.add(this, () => {
-      this.startReactRender();
+      //this.startReactRender();
     });
 
     return Promise.resolve();
@@ -79,16 +77,16 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
       }
 
       //Placeholder is present
-      if (this._footerPlaceholder.domElement) {
-        const element: React.ReactElement = React.createElement(
-          LikesAndCommentsContainer,
-          {
-            context: this.context.pageContext,
-            httpClient: this.context.spHttpClient
-          }
-        );
-        ReactDom.render(element, this._footerPlaceholder.domElement);
-      }
+      /* if (this._footerPlaceholder.domElement) {
+         const element: React.ReactElement = React.createElement(
+           LikesAndCommentsContainer,
+           {
+             context: this.context.pageContext,
+             httpClient: this.context.spHttpClient
+           }
+         );
+         ReactDom.render(element, this._footerPlaceholder.domElement);
+       } */
 
     }
 
