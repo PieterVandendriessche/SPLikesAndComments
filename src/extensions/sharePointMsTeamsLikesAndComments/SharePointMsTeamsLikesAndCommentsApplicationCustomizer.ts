@@ -7,6 +7,7 @@ import { Dialog } from '@microsoft/sp-dialog';
 
 import * as React from "react";
 import * as ReactDom from 'react-dom';
+import { sp } from "@pnp/sp";
 
 import * as strings from 'SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings';
 import { LikesAndCommentsContainer } from "./components/LikesAndCommentsContainer";
@@ -29,6 +30,13 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
 
   @override
   public onInit(): Promise<void> {
+    console.log(this.context.pageContext.web.absoluteUrl);
+    sp.setup({
+      spfxContext: this.context
+    });
+    console.log(this.context.pageContext.web.absoluteUrl);
+
+
     //When a placeholderProvider has changed fire the render method again.
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
 
@@ -36,13 +44,18 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
     this.context.application.navigatedEvent.add(this, () => {
       this.startReactRender();
     });
+
     return Promise.resolve();
   }
 
   public startReactRender() {
     if (this._footerPlaceholder && this._footerPlaceholder.domElement) {
       const element: React.ReactElement = React.createElement(
-        LikesAndCommentsContainer
+        LikesAndCommentsContainer,
+        {
+          context: this.context.pageContext,
+          httpClient: this.context.spHttpClient
+        }
       );
       ReactDom.render(element, this._footerPlaceholder.domElement);
     }
@@ -68,7 +81,11 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
       //Placeholder is present
       if (this._footerPlaceholder.domElement) {
         const element: React.ReactElement = React.createElement(
-          LikesAndCommentsContainer
+          LikesAndCommentsContainer,
+          {
+            context: this.context.pageContext,
+            httpClient: this.context.spHttpClient
+          }
         );
         ReactDom.render(element, this._footerPlaceholder.domElement);
       }
