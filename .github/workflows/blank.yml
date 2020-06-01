@@ -4,7 +4,7 @@ on: push
 
 # Variables that are available for all the jobs in the workflow
 env:
-  SPPKG_FILE_NAME: 'package-name.sppkg'
+  SPPKG_FILE_NAME: 'share-point-ms-teams-like-and-comments.sppkg'
   SEND_MAIL: 'true'
 
 jobs:
