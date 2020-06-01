@@ -1,0 +1,69 @@
+# This is a basic workflow to help you get started with Actions
+
+name: SPFx CICD with office 365 CLI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+    
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Use Node.js 10.x
+      run: actions/setup-node@v1
+        with: 
+        node-version: 10.x
+        
+    # npm install
+    - name: Run npm ci
+      run: npm ci
+      
+      # install gulp if mac
+    - name: Run npm i -g gulp
+      run: npm i -g gulp
+      if: runner.os == 'macOS'
+      
+      # gulp bundle and package solution
+    - name: Bundle and package
+      run: |
+        gulp bundle --ship
+        gulp package-solution --ship    
+        
+      # Login to tenant using action-cli-login
+    - name: Office 365 CLI Login
+      uses: pnp/action-cli-login@v1.0.0
+      with:
+        ADMIN_USERNAME:  ${{ secrets.adminUsername }}
+        ADMIN_PASSWORD:  ${{ secrets.adminPassword }}
+        
+         # Deploy package to tenant using action-cli-deploy
+    - name: Office 365 CLI Deploy
+      uses: pnp/action-cli-deploy@v1.0.0
+      with:
+        APP_FILE_PATH: sharepoint/solution/${{ env.SPPKG_FILE_NAME }}
+        # SKIP_FEATURE_DEPLOYMENT: true
+        # OVERWRITE: true
+    
+        
+         # Deploy package to tenant using action-cli-deploy
+    - name: Office 365 CLI Deploy
+      uses: pnp/action-cli-deploy@v1.0.0
+      with:
+        APP_FILE_PATH: sharepoint/solution/${{ env.SPPKG_FILE_NAME }}
+        # SKIP_FEATURE_DEPLOYMENT: true
+        # OVERWRITE: true
+    
+      
+      
