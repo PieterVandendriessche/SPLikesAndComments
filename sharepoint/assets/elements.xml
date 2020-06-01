@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="SharePointMsTeamsLikesAndComments"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="442b2c82-f26f-4274-8d70-714ac9abbe1e"
+        ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
+    </CustomAction>
+</Elements>

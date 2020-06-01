@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "share-point-ms-teams-likes-and-comments-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/sharePointMsTeamsLikesAndComments/SharePointMsTeamsLikesAndCommentsApplicationCustomizer.js",
+          "manifest": "./src/extensions/sharePointMsTeamsLikesAndComments/SharePointMsTeamsLikesAndCommentsApplicationCustomizer.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings": "lib/extensions/sharePointMsTeamsLikesAndComments/loc/{locale}.js"
+  }
+}
