@@ -49,6 +49,6 @@ jobs:
       uses: pnp/action-cli-deploy@v1.0.0
       with:
         APP_FILE_PATH: sharepoint/solution/${{ env.SPPKG_FILE_NAME }}
-        # SKIP_FEATURE_DEPLOYMENT: true
-        # OVERWRITE: true
+        SKIP_FEATURE_DEPLOYMENT: false
+        OVERWRITE: true
     
