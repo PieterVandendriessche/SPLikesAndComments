@@ -54,16 +54,13 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
     public render() {
         //Todo: add the check!
         const clientType = getClientType();
-        return ClientType.TeamsApp === clientType ?
-            (<div>Render approved</div>)
-            :
-            (<div className={styles.container}>
-                <AmountOfCommentsHeader
-                    comments={this.state.comments}
-                />
-                <LikesAndCommentsList
-                    comments={this.state.comments}
-                />
-            </div>);
+        return <div className={styles.container}>
+            <AmountOfCommentsHeader
+                comments={this.state.comments}
+            />
+            <LikesAndCommentsList
+                comments={this.state.comments}
+            />
+        </div>;
     }
 }
