@@ -1,9 +1,9 @@
 import * as React from "react";
-import { getClientType } from "../../../utils";
-import { ClientType, IComment } from "../../../models";
+import { getClientType } from "../utils";
+import { ClientType, IComment } from "../models";
 import { PageContext } from '@microsoft/sp-page-context';
-import { ICommentService } from "../../../services/ICommentService";
-import { CommentService } from "../../../services/CommentService";
+import { ICommentService } from "../services/ICommentService";
+import { CommentService } from "../services/CommentService";
 import { SPHttpClient } from '@microsoft/sp-http';
 import "@pnp/sp/comments/clientside-page";
 import { sp, IClientsidePage } from "@pnp/sp/presets/all";
@@ -51,6 +51,19 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
             .then((newComment) => this.setState({ comments: [...this.state.comments, newComment] }));
     }
 
+    public likeComment = (comment: IComment): void => {
+        if (comment.isLikedByUser) return;
+        this.commentService.likeComment(comment.id)
+            .then(() => {
+                var newItems = this.state.comments.filter(e => e.id !== comment.id);
+                comment.isLikedByUser = true;
+                comment.likeCount += 1;
+                this.setState({ comments: [...newItems, comment] });
+            });
+    }
+
+
+
     public render() {
         //Todo: add the check!
         const clientType = getClientType();
@@ -60,6 +73,7 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
             />
             <LikesAndCommentsList
                 comments={this.state.comments}
+                commentMethods={{ likeComment: this.likeComment, unlikeComment: this.likeComment }}
             />
         </div>;
     }

@@ -10,7 +10,7 @@ import * as ReactDom from 'react-dom';
 import { sp } from "@pnp/sp";
 
 import * as strings from 'SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings';
-import { LikesAndCommentsContainer } from "./components/LikesAndCommentsContainer";
+import { LikesAndCommentsContainer } from "../../components/LikesAndCommentsContainer";
 
 const LOG_SOURCE: string = 'SharePointMsTeamsLikesAndCommentsApplicationCustomizer';
 

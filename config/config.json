@@ -9,10 +9,19 @@
           "manifest": "./src/extensions/sharePointMsTeamsLikesAndComments/SharePointMsTeamsLikesAndCommentsApplicationCustomizer.manifest.json"
         }
       ]
+    },
+    "comments-ms-teams-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/commentsMsTeams/CommentsMsTeamsWebPart.js",
+          "manifest": "./src/webparts/commentsMsTeams/CommentsMsTeamsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings": "lib/extensions/sharePointMsTeamsLikesAndComments/loc/{locale}.js"
+    "SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings": "lib/extensions/sharePointMsTeamsLikesAndComments/loc/{locale}.js",
+    "CommentsMsTeamsWebPartStrings": "lib/webparts/commentsMsTeams/loc/{locale}.js"
   }
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IComment } from "../../../models/index";
+import { IComment } from "../models/index";
 
 export interface IAmountOfCommentsHeaderProps {
     comments: IComment[];
