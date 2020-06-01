@@ -12,6 +12,20 @@ export class CommentService implements ICommentService {
         this.currentWebUrl = currentWebUrl;
         this.spHttpClient = spHttpClient;
     }
+
+    public async createNewComment(text: string): Promise<IComment> {
+        const spOpts: ISPHttpClientOptions = {
+            body: `{ "text": "${text}" }`
+        };
+        const url = `${this.currentWebUrl}/_api/web/lists/GetByTitle('Site Pages')/GetItemById(${this.currentPageId})/Comments`;
+        const response = await this.spHttpClient.post(url, SPHttpClient.configurations.v1, spOpts);
+        const responseJSON = await response.json();
+
+        const comment: IComment = responseJSON;
+        debugger;
+        return comment;
+    }
+
     public async areCommentsDisabled(): Promise<boolean> {
         const url = `${this.currentWebUrl}/_api/web/lists/GetByTitle('Site Pages')/GetItemById(${this.currentPageId})/commentsDisabled`;
         const response = await this.spHttpClient.get(url, SPHttpClient.configurations.v1);

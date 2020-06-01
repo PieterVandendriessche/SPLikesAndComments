@@ -10,4 +10,6 @@ export interface ICommentService {
     unlikeComment(commentId: string): Promise<void>;
 
     areCommentsDisabled(): Promise<boolean>;
+
+    createNewComment(text: string): Promise<IComment>
 }

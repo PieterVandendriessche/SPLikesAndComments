@@ -82,6 +82,20 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
             });
     }
 
+
+    public postNewComment = (text: string): void => {
+
+        this.commentService.createNewComment(text)
+            .then((data) => {
+                const newItemArray = [...this.state.comments, data];
+                debugger;
+                this.setState({
+                    comments: this.sortCommentItems(newItemArray)
+                });
+            });
+    }
+
+
     private updateCommentInState = (commentToUpdate: IComment, isReply: boolean): void => {
         const { comments } = this.state;
         var changedComments: IComment[];
@@ -104,8 +118,13 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
         }
         nonAffectedComments = comments.filter(e => e.id !== affectedComment.id);
         var newComments = [...nonAffectedComments, affectedComment];
-        newComments = newComments.sort((a, b) => (a.id > b.id) ? -1 : 1);
+        newComments = this.sortCommentItems(newComments);
         this.setState({ comments: newComments });
+    }
+
+
+    private sortCommentItems = (items: IComment[]): IComment[] => {
+        return items.sort((a, b) => (a.id > b.id) ? -1 : 1);
     }
 
 
@@ -117,7 +136,10 @@ export class LikesAndCommentsContainer extends React.Component<ILikesAndComments
             <AmountOfCommentsHeader
                 comments={this.state.comments}
             />
-            <CommentBox />
+            <CommentBox
+                postMessage={this.postNewComment}
+
+            />
             <LikesAndCommentsList
                 comments={this.state.comments}
                 commentMethods={{ likeComment: this.likeComment, unlikeComment: this.unlikeComment }}

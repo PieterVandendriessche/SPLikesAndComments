@@ -18,7 +18,7 @@ export const LikesAndCommentsList: React.SFC<ILikesAndCommentsListProps> = (prop
                         commentMethods={props.commentMethods}
                         isReply={false}
                     />
-                    {item.replies.map((reply, index2) => {
+                    {item.replies && item.replies.map((reply, index2) => {
                         return (
                             <div className={styles.reply}>
                                 <LikesAndCommentsItem
