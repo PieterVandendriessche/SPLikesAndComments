@@ -6,14 +6,14 @@ import { useState } from "react";
 import { TextField, DefaultButton, Stack } from "office-ui-fabric-react";
 
 export interface ICommentBoxProps {
-    postMessage: (message: string) => void
+    postMessage: (message: string) => void;
 }
 
 const onPostClick = (text: string, setText: React.Dispatch<any>, callback: (message: string) => void) => {
     if (text == null || text.length < 1) return;
     setText("");
     callback(text);
-}
+};
 
 
 export const CommentBox: React.SFC<ICommentBoxProps> = (props) => {

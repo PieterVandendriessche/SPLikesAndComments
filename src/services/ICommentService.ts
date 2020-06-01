@@ -11,5 +11,5 @@ export interface ICommentService {
 
     areCommentsDisabled(): Promise<boolean>;
 
-    createNewComment(text: string): Promise<IComment>
+    createNewComment(text: string): Promise<IComment>;
 }
