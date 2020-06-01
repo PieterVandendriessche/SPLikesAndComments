@@ -1,0 +1,54 @@
+name: SPFx CICD with Office 365 CLI
+
+on: push
+
+# Variables that are available for all the jobs in the workflow
+env:
+  SPPKG_FILE_NAME: 'package-name.sppkg'
+  SEND_MAIL: 'true'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v1
+      
+    # Setup node.js runtime
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    
+    # npm install
+    - name: Run npm install
+      run: npm install
+    
+    # install gulp if mac
+    - name: Run npm i -g gulp
+      run: npm i -g gulp
+      if: runner.os == 'macOS'
+    
+    # gulp bundle and package solution
+    - name: Bundle and package
+      run: |
+        gulp bundle --ship
+        gulp package-solution --ship    
+    
+    # Login to tenant using action-cli-login
+    - name: Office 365 CLI Login
+      uses: pnp/action-cli-login@v1.0.0
+      with:
+        ADMIN_USERNAME:  ${{ secrets.ADMINUSERNAME}}
+        ADMIN_PASSWORD:  ${{ secrets.ADMINPASSWORD }}
+    
+    # Deploy package to tenant using action-cli-deploy
+    - name: Office 365 CLI Deploy
+      uses: pnp/action-cli-deploy@v1.0.0
+      with:
+        APP_FILE_PATH: sharepoint/solution/${{ env.SPPKG_FILE_NAME }}
+        # SKIP_FEATURE_DEPLOYMENT: true
+        # OVERWRITE: true
+    
