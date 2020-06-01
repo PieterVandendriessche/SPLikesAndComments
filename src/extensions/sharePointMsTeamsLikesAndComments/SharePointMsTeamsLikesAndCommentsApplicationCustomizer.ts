@@ -5,7 +5,11 @@ import {
 } from '@microsoft/sp-application-base';
 import { Dialog } from '@microsoft/sp-dialog';
 
+import * as React from "react";
+import * as ReactDom from 'react-dom';
+
 import * as strings from 'SharePointMsTeamsLikesAndCommentsApplicationCustomizerStrings';
+import { LikesAndCommentsContainer } from "./components/LikesAndCommentsContainer";
 
 const LOG_SOURCE: string = 'SharePointMsTeamsLikesAndCommentsApplicationCustomizer';
 
@@ -34,8 +38,18 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
     });
     return Promise.resolve();
   }
+
   public startReactRender() {
-    throw new Error("Method not implemented.");
+    if (this._footerPlaceholder && this._footerPlaceholder.domElement) {
+      const element: React.ReactElement = React.createElement(
+        LikesAndCommentsContainer
+      );
+      ReactDom.render(element, this._footerPlaceholder.domElement);
+    }
+    else {
+      console.log('DOM element of the header is undefined. Start to re-render.');
+      this._renderPlaceHolders();
+    }
   }
 
   private _renderPlaceHolders() {
@@ -44,6 +58,20 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
       this._footerPlaceholder = this.context.placeholderProvider.tryCreateContent(PlaceholderName.Bottom, {
         onDispose: this._onDispose
       });
+
+      //placeholder is not available
+      if (!this._footerPlaceholder) {
+        console.error("The expected placeholder (PageFooter) was not found.");
+        return;
+      }
+
+      //Placeholder is present
+      if (this._footerPlaceholder.domElement) {
+        const element: React.ReactElement = React.createElement(
+          LikesAndCommentsContainer
+        );
+        ReactDom.render(element, this._footerPlaceholder.domElement);
+      }
 
     }
 
