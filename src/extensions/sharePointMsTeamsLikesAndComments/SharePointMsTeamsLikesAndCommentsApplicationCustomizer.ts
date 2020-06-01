@@ -34,7 +34,7 @@ export default class SharePointMsTeamsLikesAndCommentsApplicationCustomizer
     });
     return Promise.resolve();
   }
-  startReactRender() {
+  public startReactRender() {
     throw new Error("Method not implemented.");
   }
 
